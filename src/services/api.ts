@@ -9,17 +9,17 @@ export const api = createApi({
   }),
   endpoints: (builder) => ({
     getProdutos: builder.query<Produto[], void>({
-      query: () => 'produtos'
+      query: () => '/produtos'
     }),
     adicionarFavorito: builder.mutation<Produto, number>({
       query: (produtoId) => ({
-        url: `favoritos/${produtoId}`,
+        url: `/favoritos/${produtoId}`,
         method: 'POST'
       })
     }),
     adicionarAoCarrinho: builder.mutation<void, number>({
       query: (produtoId) => ({
-        url: `carrinho/${produtoId}`,
+        url: `/carrinho/${produtoId}`,
         method: 'POST'
       })
     })

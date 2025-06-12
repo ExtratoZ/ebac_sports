@@ -12,6 +12,8 @@ const ProdutosComponent = () => {
   const favoritos = useSelector((state: RootState) => state.favoritos)
   const dispatch = useDispatch()
 
+  console.log('Dados da API:', { produtos, isLoading, error })
+
   const produtoEstaNosFavoritos = (produto: ProdutoType) => {
     return favoritos.some((f) => f.id === produto.id)
   }
@@ -21,7 +23,15 @@ const ProdutosComponent = () => {
   }
 
   if (isLoading) return <div>Carregando...</div>
-  if (error) return <div>Erro ao carregar produtos</div>
+  if (error) {
+    console.error('Erro na API:', error)
+    return <div>Erro ao carregar produtos</div>
+  }
+
+  if (!produtos || !Array.isArray(produtos)) {
+    console.error('Produtos não é um array:', produtos)
+    return <div>Nenhum produto disponível</div>
+  }
 
   return (
     <>
