@@ -12,8 +12,6 @@ const ProdutosComponent = () => {
   const favoritos = useSelector((state: RootState) => state.favoritos)
   const dispatch = useDispatch()
 
-  console.log('Dados da API:', { produtos, isLoading, error })
-
   const produtoEstaNosFavoritos = (produto: ProdutoType) => {
     return favoritos.some((f) => f.id === produto.id)
   }
@@ -22,7 +20,12 @@ const ProdutosComponent = () => {
     dispatch(toggleFavorito(produto))
   }
 
+  const handleAdicionarAoCarrinho = (produto: ProdutoType) => {
+    dispatch(adicionarAoCarrinho(produto))
+  }
+
   if (isLoading) return <div>Carregando...</div>
+
   if (error) {
     console.error('Erro na API:', error)
     return <div>Erro ao carregar produtos</div>
@@ -38,11 +41,11 @@ const ProdutosComponent = () => {
       <S.Produtos>
         {produtos?.map((produto) => (
           <Produto
-            estaNosFavoritos={produtoEstaNosFavoritos(produto)}
             key={produto.id}
             produto={produto}
+            estaNosFavoritos={produtoEstaNosFavoritos(produto)}
             favoritar={() => handleFavoritar(produto)}
-            adicionarAoCarrinho={() => dispatch(adicionarAoCarrinho(produto))}
+            adicionarAoCarrinho={() => handleAdicionarAoCarrinho(produto)}
           />
         ))}
       </S.Produtos>

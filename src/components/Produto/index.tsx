@@ -21,11 +21,15 @@ const ProdutoComponent = ({ produto }: ProdutoProps) => {
   const dispatch = useDispatch()
   const favoritos = useSelector((state: RootState) => state.favoritos)
 
+  const estaFavoritado = favoritos.some((p) => p.id === produto.id)
+
   const handleFavoritar = () => {
     dispatch(toggleFavorito(produto))
   }
 
-  const estaFavoritado = favoritos.some((p) => p.id === produto.id)
+  const handleAdicionarAoCarrinho = () => {
+    dispatch(adicionarAoCarrinho(produto))
+  }
 
   return (
     <S.Produto>
@@ -41,10 +45,7 @@ const ProdutoComponent = ({ produto }: ProdutoProps) => {
           ? '- Remover dos favoritos'
           : '+ Adicionar aos favoritos'}
       </S.BtnComprar>
-      <S.BtnComprar
-        onClick={() => dispatch(adicionarAoCarrinho(produto))}
-        type="button"
-      >
+      <S.BtnComprar onClick={handleAdicionarAoCarrinho} type="button">
         Adicionar ao carrinho
       </S.BtnComprar>
     </S.Produto>
